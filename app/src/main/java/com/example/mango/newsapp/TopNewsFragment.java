@@ -1,7 +1,9 @@
 package com.example.mango.newsapp;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.os.Bundle;
@@ -21,7 +23,7 @@ public class TopNewsFragment extends Fragment implements LoaderManager.LoaderCal
 
     private RecyclerView topNews;
     private ProgressDialog progress;
-    private TextView errorTextVoew;
+    private TextView errorTextView;
     public TopNewsFragment() {
 
     }
@@ -38,24 +40,38 @@ public class TopNewsFragment extends Fragment implements LoaderManager.LoaderCal
                 getActivity().startActivity(i);
             }
         });
-        progress = new ProgressDialog(getContext());
-        progress.setTitle(getActivity().getString(R.string.loading_title));
-        progress.setMessage(getActivity().getString(R.string.loading_message));
-        progress.setCancelable(false);
-        progress.show();
+
 
         topNews = (RecyclerView) view.findViewById(R.id.topNews);
-        errorTextVoew = (TextView) view.findViewById(R.id.errorMessage);
+        errorTextView = (TextView) view.findViewById(R.id.errorMessage);
 
         topNews.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         topNews.setItemAnimator(new DefaultItemAnimator());
 
-        Bundle bundle = new Bundle();
-        bundle.putString("URL", "https://content.guardianapis.com/search?api-key=68e66e95-8802-47f1-8eca-3aaf1dcdf17b&show-fields=headline,thumbnail&show-tags=contributor&page-size=30");
-        getLoaderManager().initLoader(1, bundle, this);
+        if(isNetworkConnected())
+        {
+            progress = new ProgressDialog(getContext());
+            progress.setTitle(getActivity().getString(R.string.loading_title));
+            progress.setMessage(getActivity().getString(R.string.loading_message));
+            progress.setCancelable(false);
+            progress.show();
+            Bundle bundle = new Bundle();
+            bundle.putString("URL", "https://content.guardianapis.com/search?api-key=68e66e95-8802-47f1-8eca-3aaf1dcdf17b&show-fields=headline,thumbnail&show-tags=contributor&page-size=30");
+            getLoaderManager().initLoader(1, bundle, this);
+
+        }
+        else
+        {
+            errorTextView.setVisibility(View.VISIBLE);
+            errorTextView.setText(R.string.no_internet_msg);
+        }
         return view;
     }
 
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
+    }
     @Override
     public Loader<String> onCreateLoader(int i, Bundle bundle) {
         return new JSONLoader(getContext(), bundle.getString("URL"));
@@ -66,7 +82,7 @@ public class TopNewsFragment extends Fragment implements LoaderManager.LoaderCal
         progress.dismiss();
         ArrayList<News> allNews = new News().getAllNewsData(s);
         if(allNews.size() == 0)
-            errorTextVoew.setVisibility(View.VISIBLE);
+            errorTextView.setVisibility(View.VISIBLE);
 
         NewsRecyclerViewAdapter adapter = new NewsRecyclerViewAdapter(allNews, getContext());
         topNews.setAdapter(adapter);

@@ -5,6 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".TopicTabFragment">
 
+    <TextView
+        android:id="@+id/errorMessage"
+        android:visibility="gone"
+        android:text="@string/errorMessage"
+        android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
+        android:textStyle="bold"
+        android:textSize="@dimen/news_HeadlineSize"
+        android:layout_height="wrap_content" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/topNews"
         android:layout_width="match_parent"

@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
     final Fragment topNewsFragment = new TopNewsFragment();
     final Fragment headlineFragment = new TopicFragment();
     final FragmentManager fm = getSupportFragmentManager();
@@ -40,19 +39,12 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null;
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if(!isNetworkConnected()){
-            Toast.makeText(MainActivity.this, "Please check for internet connection.", Toast.LENGTH_LONG).show();
-            this.finish();
-        }
         fm.beginTransaction().add(R.id.frameLayout, headlineFragment, "2").hide(headlineFragment).commit();
         fm.beginTransaction().add(R.id.frameLayout,topNewsFragment, "1").commit();
 

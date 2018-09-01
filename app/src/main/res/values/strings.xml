@@ -9,6 +9,7 @@
     <string name="news_author_prifix">by</string>
 
     <string name="errorMessage">Opps Unable to load News for you !!!!!</string>
+    <string name="no_internet_msg">Please Connect to Internet and try again. :(</string>
 
     <string name="topic_world">World</string>
     <string name="topic_science">Science</string>
