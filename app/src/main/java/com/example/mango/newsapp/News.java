@@ -17,6 +17,7 @@ public class News {
     private String newsHeadLine;
     private String newsWebUrl;
     private String newsDate;
+    private String newsSection;
     private String newsThumbline;;
     private String newsAuthor;
 
@@ -40,6 +41,8 @@ public class News {
         return newsAuthor;
     }
 
+    public String getNewsSection() { return  newsSection; }
+
     private News setNewsData(JSONObject json) throws  JSONException, ParseException{
         this.newsHeadLine = json.getString("webTitle");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -48,6 +51,7 @@ public class News {
         if(json.getJSONObject("fields").isNull("thumbnail") == false)
             this.newsThumbline = json.getJSONObject("fields").getString("thumbnail");
         this.newsWebUrl = json.getString("webUrl");
+        this.newsSection = json.getString("sectionName");
         this.newsAuthor = json.getJSONArray("tags").getJSONObject(0).getString("webTitle");
         return this;
     }
