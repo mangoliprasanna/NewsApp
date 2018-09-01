@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="bottom_margin">56dp</dimen>
+    <dimen name="defaultMargin">16dp</dimen>
+    <dimen name="appBarSize">20sp</dimen>
+
+    <dimen name="constraintMargin">8dp</dimen>
+
+    <dimen name="newsImage_height">100dp</dimen>
+    <dimen name="newsImage_width">150dp</dimen>
+
+    <dimen name="news_imageElevation">4dp</dimen>
+    <dimen name="news_HeadlineSize">15sp</dimen>
+</resources>

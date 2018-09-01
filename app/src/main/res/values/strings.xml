@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">NewsApp</string>
+    <string name="title_home">Top News</string>
+    <string name="title_dashboard">Topics</string>
+    <string name="title_notifications">Categories</string>
+    <string name="loading_title">Loading</string>
+    <string name="loading_message">Please wait while loading..</string>
+
+    <string name="news_author_prifix">by</string>
+
+    <string name="errorMessage">Opps Unable to load News for you !!!!!</string>
+
+    <string name="topic_world">World</string>
+    <string name="topic_science">Science</string>
+    <string name="topic_technology">Technology</string>
+    <string name="topic_sports">Sports</string>
+    <string name="topic_games">Games</string>
+    <string name="topic_music">Music</string>
+    <string name="topic_film">Film</string>
+    <string name="topic_politics">Politics</string>
+
+</resources>

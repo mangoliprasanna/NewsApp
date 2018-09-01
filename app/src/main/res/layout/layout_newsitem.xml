@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="@dimen/constraintMargin"
+    android:id="@+id/listContainer"
+    android:layout_width="match_parent"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/newsImage"
+        android:layout_width="@dimen/newsImage_width"
+        android:layout_height="@dimen/newsImage_height"
+        android:layout_marginLeft="@dimen/constraintMargin"
+        android:layout_marginStart="@dimen/constraintMargin"
+        android:layout_marginTop="@dimen/constraintMargin"
+        android:background="@android:color/black"
+        android:elevation="@dimen/news_imageElevation"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:layout_toRightOf="@id/newsImage"
+        android:id="@+id/mewsHeadline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/constraintMargin"
+        android:layout_marginStart="@dimen/constraintMargin"
+        android:textStyle="bold"
+        android:textSize="@dimen/news_HeadlineSize"
+        android:layout_marginTop="@dimen/constraintMargin" />
+
+    <TextView
+        android:layout_below="@id/mewsHeadline"
+        android:layout_toRightOf="@id/newsImage"
+        android:id="@+id/newsAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/constraintMargin"
+        android:layout_marginStart="@dimen/constraintMargin"
+        android:textSize="@dimen/news_HeadlineSize" />
+
+    <TextView
+        android:id="@+id/newsTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/constraintMargin"
+        android:layout_marginStart="@dimen/constraintMargin"
+        android:layout_alignBottom="@id/newsImage"
+        android:layout_toRightOf="@id/newsImage"
+        android:textSize="@dimen/news_HeadlineSize" />
+
+</RelativeLayout>
