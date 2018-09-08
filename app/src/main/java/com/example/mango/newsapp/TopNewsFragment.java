@@ -3,7 +3,10 @@ package com.example.mango.newsapp;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.os.Bundle;
@@ -20,6 +23,8 @@ import java.util.ArrayList;
 
 
 public class TopNewsFragment extends Fragment implements LoaderManager.LoaderCallbacks<String>{
+
+    private final String REQUEST_URL = "https://content.guardianapis.com/search?api-key=68e66e95-8802-47f1-8eca-3aaf1dcdf17b&show-fields=headline,thumbnail&show-tags=contributor";
 
     private RecyclerView topNews;
     private ProgressDialog progress;
@@ -55,8 +60,18 @@ public class TopNewsFragment extends Fragment implements LoaderManager.LoaderCal
             progress.setMessage(getActivity().getString(R.string.loading_message));
             progress.setCancelable(false);
             progress.show();
+
+
+            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+            String maxNewsPerPage = sharedPrefs.getString(getString(R.string.settings_max_news_key), getString(R.string.settings_max_news_default));
+            String orderBy = sharedPrefs.getString(getString(R.string.settings_order_by_key), getString(R.string.settings_order_by_default));
+
+            Uri.Builder uriBuilder = Uri.parse(REQUEST_URL).buildUpon();
+            uriBuilder.appendQueryParameter("order-by", orderBy);
+            uriBuilder.appendQueryParameter("page-size", maxNewsPerPage);
+
             Bundle bundle = new Bundle();
-            bundle.putString("URL", "https://content.guardianapis.com/search?api-key=68e66e95-8802-47f1-8eca-3aaf1dcdf17b&show-fields=headline,thumbnail&show-tags=contributor&page-size=30");
+            bundle.putString("URL", uriBuilder.toString());
             getLoaderManager().initLoader(1, bundle, this);
 
         }
