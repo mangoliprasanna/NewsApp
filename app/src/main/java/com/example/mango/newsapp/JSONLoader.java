@@ -2,6 +2,7 @@ package com.example.mango.newsapp;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +15,7 @@ import java.nio.charset.Charset;
 
 public class JSONLoader extends AsyncTaskLoader<String> {
 
-    private String url;
+    private final String url;
     public JSONLoader(Context context, String url) {
         super(context);
         this.url = url;
@@ -42,7 +43,10 @@ public class JSONLoader extends AsyncTaskLoader<String> {
          httpURLConnection.setConnectTimeout(10000);
          httpURLConnection.setReadTimeout(10000);
          httpURLConnection.connect();
-         inputStream = httpURLConnection.getInputStream();
+
+         if(httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK){
+             inputStream = httpURLConnection.getInputStream();
+         }
 
          StringBuilder outputJson = new StringBuilder();
          if(inputStream != null){

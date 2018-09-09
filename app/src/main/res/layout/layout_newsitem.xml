@@ -33,9 +33,10 @@
     <TextView
         android:layout_below="@id/mewsHeadline"
         android:layout_toRightOf="@id/newsImage"
+        android:ellipsize="end"
         android:id="@+id/newsAuthor"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_marginLeft="@dimen/constraintMargin"
         android:layout_marginStart="@dimen/constraintMargin"
         android:textSize="@dimen/news_HeadlineSize" />

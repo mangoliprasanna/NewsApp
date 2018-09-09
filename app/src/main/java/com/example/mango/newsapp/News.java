@@ -1,15 +1,14 @@
 package com.example.mango.newsapp;
 
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class News {
@@ -48,11 +47,16 @@ public class News {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date_format = sdf.parse(json.getString("webPublicationDate").replace("Z", "").replace("T", " "));
         this.newsDate = new SimpleDateFormat("MMMM dd, yyyy").format(date_format).toString();
+
         if(json.getJSONObject("fields").isNull("thumbnail") == false)
             this.newsThumbline = json.getJSONObject("fields").getString("thumbnail");
+
         this.newsWebUrl = json.getString("webUrl");
         this.newsSection = json.getString("sectionName");
-        this.newsAuthor = json.getJSONArray("tags").getJSONObject(0).getString("webTitle");
+        final JSONArray authorTag = json.getJSONArray("tags");
+        if(authorTag.length() > 0)
+            this.newsAuthor = authorTag.getJSONObject(0).getString("webTitle");
+
         return this;
     }
     public ArrayList<News> getAllNewsData(String json){

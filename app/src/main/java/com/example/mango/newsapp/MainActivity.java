@@ -1,7 +1,6 @@
 package com.example.mango.newsapp;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -9,16 +8,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     final Fragment topNewsFragment = new TopNewsFragment();
     final Fragment headlineFragment = new TopicFragment();
     final FragmentManager fm = getSupportFragmentManager();
-    private FrameLayout frameLayout;
+
     Fragment fragment = null;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -39,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
         fragment = topNewsFragment;
         getSupportActionBar().hide();
-        frameLayout = (FrameLayout) findViewById(R.id.frameLayout);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }

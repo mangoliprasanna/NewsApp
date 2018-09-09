@@ -1,6 +1,6 @@
 package com.example.mango.newsapp;
 
-import android.app.ProgressDialog;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class TopNewsFragment extends Fragment implements LoaderManager.LoaderCal
     private final String REQUEST_URL = "https://content.guardianapis.com/search?api-key=68e66e95-8802-47f1-8eca-3aaf1dcdf17b&show-fields=headline,thumbnail&show-tags=contributor";
 
     private RecyclerView topNews;
-    private ProgressDialog progress;
+    private ProgressBar progress;
     private TextView errorTextView;
     public TopNewsFragment() {
 
@@ -49,18 +50,13 @@ public class TopNewsFragment extends Fragment implements LoaderManager.LoaderCal
 
         topNews = (RecyclerView) view.findViewById(R.id.topNews);
         errorTextView = (TextView) view.findViewById(R.id.errorMessage);
+        progress = (ProgressBar) view.findViewById(R.id.progressBar);
 
         topNews.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         topNews.setItemAnimator(new DefaultItemAnimator());
 
-        if(isNetworkConnected())
-        {
-            progress = new ProgressDialog(getContext());
-            progress.setTitle(getActivity().getString(R.string.loading_title));
-            progress.setMessage(getActivity().getString(R.string.loading_message));
-            progress.setCancelable(false);
-            progress.show();
-
+        if(isNetworkConnected()) {
+            progress.setVisibility(View.VISIBLE);
 
             SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
             String maxNewsPerPage = sharedPrefs.getString(getString(R.string.settings_max_news_key), getString(R.string.settings_max_news_default));
@@ -74,9 +70,7 @@ public class TopNewsFragment extends Fragment implements LoaderManager.LoaderCal
             bundle.putString("URL", uriBuilder.toString());
             getLoaderManager().initLoader(1, bundle, this);
 
-        }
-        else
-        {
+        } else {
             errorTextView.setVisibility(View.VISIBLE);
             errorTextView.setText(R.string.no_internet_msg);
         }
@@ -94,7 +88,7 @@ public class TopNewsFragment extends Fragment implements LoaderManager.LoaderCal
 
     @Override
     public void onLoadFinished(Loader<String> loader, String s) {
-        progress.dismiss();
+        progress.setVisibility(View.GONE);
         ArrayList<News> allNews = new News().getAllNewsData(s);
         if(allNews.size() == 0)
             errorTextView.setVisibility(View.VISIBLE);

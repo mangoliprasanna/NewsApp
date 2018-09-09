@@ -36,10 +36,8 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     public void onBindViewHolder(NewsHolder holder, int position) {
         final News currentNews = allNews.get(position);
         holder.newsTimeTextView.setText(currentNews.getNewsDate());
-        if(currentNews.getNewsHeadLine().length() > 50)
-            holder.newsHeadlineTextView.setText(currentNews.getNewsHeadLine().substring(0, 50).toString() + "...");
-        else
-            holder.newsHeadlineTextView.setText(currentNews.getNewsHeadLine());
+
+        holder.newsHeadlineTextView.setText(currentNews.getNewsHeadLine());
         holder.newsCategoryTextView.setText(context.getString(R.string.news_author_prifix) + " " + currentNews.getNewsAuthor() + "\n" + currentNews.getNewsSection());
         if(currentNews.getNewsThumbline() != null)
             Picasso.get().load(currentNews.getNewsThumbline()).into(holder.newsImageView);
